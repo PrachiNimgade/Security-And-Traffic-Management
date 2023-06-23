@@ -1,0 +1,26 @@
+systemctl stop firewalld
+systemctl disable firewalld
+selinux=disbled
+ip a
+cat /etc/netconfig
+nmtui
+cat /proc/sys/net/ipv4/ip_forward
+        =>1
+If 0 is there then
+vim /etc/sysctl.conf
+add this line to that file  => net.ipv4.ip_forward=1
+systemctl status iptables
+iptables -F   (It flush the tables)
+yum ssearch iptables
+yum install iptables-services iptables-utils
+systemctl start iptables
+systemctl enable iptables
+iptables -L
+iptables -t filter -L
+iptables -t nat -L
+iptables -t mangle -L
+iptables -t raw -L
+iptables --flush (It flush the tables)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
