@@ -1,0 +1,52 @@
+ON MACHINE 1
+===================================================================================
+
+iptables -A FORWARD -d HostOnlyNetwork/24 -p icmp --icmp-type echo-request -j DROP
+
+iptables -A INPUT -i IPofens33(master machine) -p icmp --icmp-type echo-request -j DROP 
+
+iptables -A INPUT -i IPofens33(master machine) -p icmp -m limit --limit 5/s -j ACCEPT
+===================================================================================
+
+EX OF ALL ABOVE COMMAND
+
+iptables -A FORWARD -d 10.10.10.0/24 -p icmp --icmp-type echo-request -j DROP
+
+iptables -A INPUT -i 192.168.20.144 -p icmp --icmp-type echo-request -j DROP 
+
+iptables -A INPUT -i 192.168.20.144 -p icmp -m limit --limit 5/s -j ACCEPT
+
+#####################################################################################
+
+ping -l 128 192.168.20.144 (nat ip master machine)
+====================================================================================
+
+HOW TO LIMIT ICMP PACKET SIZE??????
+
+iptables -A INPUT -i interface -p icmp -m length --length 1:128 -j ACCEPT
+
+iptables -A INPUT -i interface -p icmp -m length --length 128:65500 -j DROP
+
+here,  interface is your ens33......you can understand with below ex.
+
+EX:
+
+iptables -A INPUT -i ens33 -p icmp -m length --length 1:128 -j ACCEPT
+
+iptables -A INPUT -i ens33 -p icmp -m length --length 128:65500 -j DROP
+
+
+here, allow 128 block only not above that
+#############################################################################
+
+EXPLAINATION OF ABOVE COMMAND
+
+-m limit => allow you to specify number of packets to be accepted per second
+-m length => allow you to specify the length of the packets to be accepted
+
+#################################################################################
+
+
+
+
+
